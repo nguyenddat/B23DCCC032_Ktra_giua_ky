@@ -1,24 +1,24 @@
 import React, { useState, useEffect } from 'react';
 import { Table, Input, Select, Button, Popconfirm, notification } from 'antd';
 import { Link } from 'react-router-dom';
-import { useModel } from 'umi';
+import { getCourses, deleteCourse, canDeleteCourse } from '@/services/courseService';
 import type { Course } from '@/models/course';
 
 const { Search } = Input;
 const { Option } = Select;
 
 const CourseList: React.FC = () => {
-    const { courses, deleteExistingCourse } = useModel('useCourseModel');
-    const [filteredCourses, setFilteredCourses] = useState<Course[]>([]);
-    const [searchText, setSearchText] = useState<string>('');
-    const [instructorFilter, setInstructorFilter] = useState<string>('');
-    const [statusFilter, setStatusFilter] = useState<string>('');
+  const [courses, setCourses] = useState<Course[]>([]);
+  const [filteredCourses, setFilteredCourses] = useState<Course[]>([]);
+  const [searchText, setSearchText] = useState<string>('');
+  const [instructorFilter, setInstructorFilter] = useState<string>('');
+  const [statusFilter, setStatusFilter] = useState<string>('');
 
   useEffect(() => {
-    if (courses) {
-      setFilteredCourses(courses);
-    }
-  }, [courses]);
+    const data = getCourses();
+    setCourses(data);
+    setFilteredCourses(data);
+  }, []);
 
   const handleSearch = (value: string) => {
     setSearchText(value);
@@ -51,8 +51,10 @@ const CourseList: React.FC = () => {
 
   const handleDelete = (courseId: string) => {
     const course = courses.find(course => course.id === courseId);
-    if (course && (course.studentCount == null || course.studentCount === 0)) {
-      deleteExistingCourse(courseId);
+    if (course && (course.studentCount == null || course.studentCount == 0)) {
+      deleteCourse(courseId);
+      setCourses(getCourses());
+      setFilteredCourses(getCourses());
       notification.success({ message: 'Khóa học đã được xóa thành công!' });
     } else {
       notification.error({ message: 'Không thể xóa khóa học đã có học viên!' });
