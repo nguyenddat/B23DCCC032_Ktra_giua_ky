@@ -1,22 +1,23 @@
-import Footer from '@/components/Footer';
-import RightContent from '@/components/RightContent';
-import { notification } from 'antd';
 import 'moment/locale/vi';
-import type { RequestConfig, RunTimeLayoutConfig } from 'umi';
+import { notification } from 'antd';
 import { getIntl, getLocale, history } from 'umi';
+import type { RequestConfig, RunTimeLayoutConfig } from 'umi';
 import type { RequestOptionsInit, ResponseError } from 'umi-request';
-import ErrorBoundary from './components/ErrorBoundary';
 // import LoadingPage from './components/Loading';
+
+import './styles/global.less';
+import { currentRole } from './utils/ip';
+import type { IInitialState } from './services/base/typing';
+import CourseList from './pages/CourseList/CourseList';
+import NotAccessible from './pages/exception/403';
+import NotFoundContent from './pages/exception/404';
+import ErrorBoundary from './components/ErrorBoundary';
 import { OIDCBounder } from './components/OIDCBounder';
 import { unCheckPermissionPaths } from './components/OIDCBounder/constant';
 import OneSignalBounder from './components/OneSignalBounder';
 import TechnicalSupportBounder from './components/TechnicalSupportBounder';
-import NotAccessible from './pages/exception/403';
-import NotFoundContent from './pages/exception/404';
-import type { IInitialState } from './services/base/typing';
-import './styles/global.less';
-import { currentRole } from './utils/ip';
-
+import Footer from '@/components/Footer';
+import RightContent from '@/components/RightContent';
 /**  loading */
 export const initialStateConfig = {
 	loading: <></>,

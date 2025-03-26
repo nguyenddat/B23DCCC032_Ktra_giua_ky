@@ -43,6 +43,26 @@
 		component: './TodoList',
 	},
 
+    {
+        path: '/course-list',
+        name: 'CourseList',
+        icon: 'BookOutlined',
+        component: './CourseList',
+    },
+
+	{
+        path: '/course/new',
+        name: 'NewCourse',
+        component: './CourseForm',
+        hideInMenu: true,
+    },
+	
+    {
+        path: '/course/edit/:id',
+        name: 'EditCourse',
+        component: './CourseForm',
+        hideInMenu: true,
+    },
 	// DANH MUC HE THONG
 	// {
 	// 	name: 'DanhMuc',
